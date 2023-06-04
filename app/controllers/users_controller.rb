@@ -1,13 +1,19 @@
 class UsersController < ApplicationController
 
+    include BCrypt
+
     def index
         users = User.all
         render json: users
     end
 
     def create
-        new_user = create_user_params.merge(enabled: true)
-        render json: User.create!(new_user)
+        validated_params = create_user_params.merge(enabled: true)
+        password = validated_params.extract!(:password)
+        new_user = User.new(validated_params)
+        new_user.password_hash = Password.create(password)
+        new_user.save!
+        render json: new_user.as_json(:except => [ :password_hash ])
     end
 
     def update
