@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
     def index
         users = User.all
-        render json: users
+        render json: users.map {|user| user.safe_attributes}
     end
 
     def create
@@ -13,15 +13,16 @@ class UsersController < ApplicationController
         new_user = User.new(validated_params)
         new_user.password_hash = Password.create(password)
         new_user.save!
-        render json: new_user.as_json(:except => [ :password_hash ])
+        render json: new_user.safe_attributes
     end
 
     def update
-        render json: User.update!(params[:id], update_user_params)
+        updated_user = User.update!(params[:id], update_user_params)
+        render json: updated_user.safe_attributes
     end
 
     def show
-        render json: User.find(params[:id])
+        render json: User.find(params[:id]).safe_attributes
     end
 
     private
