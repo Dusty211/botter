@@ -21,3 +21,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# ssh keypair for jwt token:
+**/id_rsa*
