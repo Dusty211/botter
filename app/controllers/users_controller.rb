@@ -12,7 +12,8 @@ class UsersController < ApplicationController
         password = validated_params.extract!(:password)
         new_user = User.new(validated_params)
         new_user.password_hash = Password.create(password[:password])
-        new_user.save!
+        new_user.save! # <= Validations against unique pw and email happen here at DB level
+        response.headers["Authorization"] = "Bearer #{get_token new_user.id}"
         render json: new_user.safe_attributes
     end
 
