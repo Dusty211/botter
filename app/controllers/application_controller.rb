@@ -24,9 +24,9 @@ class ApplicationController < ActionController::API
             begin
                 token = auth_headers[7..-1]
                 decoded_token = JWT.decode token, RSA_PUBLIC_KEY, true, { algorithm: 'RS512' }
-                user_id = decoded_token[0]["user_id"]
+                @user_id = decoded_token[0]["user_id"]
                 # Refresh token:
-                response.headers["Authorization"] = "Bearer #{get_token user_id}"
+                response.headers["Authorization"] = "Bearer #{get_token @user_id}"
             rescue JWT::ExpiredSignature => e
                 render_error(CustomErrors::UnauthorizedError.new(e.message), 401)
             rescue => e
@@ -48,5 +48,9 @@ class ApplicationController < ActionController::API
             user_id: user_id
         }
         JWT.encode payload, RSA_PRIVATE_KEY, 'RS512'
+    end
+    
+    def token_user_id
+        @user_id
     end
 end
