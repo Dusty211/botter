@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-
     include BCrypt
+
+    skip_before_action :authenticate, only: [:create]
 
     def index
         users = User.all

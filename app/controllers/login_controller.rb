@@ -1,6 +1,7 @@
 class LoginController < ApplicationController
-
     include BCrypt
+
+    skip_before_action :authenticate, only: [:create]
 
     def create
         validated_params = create_login_params
