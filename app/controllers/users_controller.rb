@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     end
 
     def update
+        check_authorized
         validated_params = update_user_params
         password = validated_params.extract!(:password)
         if password[:password] != nil
@@ -24,10 +25,17 @@ class UsersController < ApplicationController
     end
 
     def show
+        check_authorized
         render json: User.find(params[:id]).safe_attributes
     end
 
     private
+
+    def check_authorized
+        if params[:id] != token_user_id.to_s
+            raise CustomErrors::ForbiddenError.new
+        end
+    end
 
     def create_user_params
         params.require(:user).require([:email, :username, :password])
