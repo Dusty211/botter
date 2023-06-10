@@ -8,7 +8,7 @@ class LoginController < ApplicationController
         user = User.find_by_email(validated_params[:email])
         password = Password.new(user[:password_hash])
         if password == validated_params[:password]
-            response.headers["Authorization"] = "Bearer #{get_token user.id}"
+            update_headers_with_token user.id
             render json: {login: true}
         else
             render json: {login: false}
