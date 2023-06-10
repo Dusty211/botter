@@ -3,11 +3,6 @@ class UsersController < ApplicationController
 
     skip_before_action :authenticate, only: [:create]
 
-    def index
-        users = User.all
-        render json: users.map {|user| user.safe_attributes}
-    end
-
     def create
         validated_params = create_user_params.merge(enabled: true)
         password = validated_params.extract!(:password)
