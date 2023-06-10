@@ -5,4 +5,11 @@ module CustomErrors
             @message = message
         end
     end
+
+    class ForbiddenError < StandardError
+        def initialize(message = "Forbidden")
+            super
+            @message = message
+        end
+    end
 end

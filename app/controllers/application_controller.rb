@@ -11,6 +11,10 @@ class ApplicationController < ActionController::API
     rescue_from 'ActiveRecord::RecordNotUnique' do |exception|
         render_error exception, 409
     end
+
+    rescue_from 'CustomErrors::ForbiddenError' do |exception|
+        render_error exception, 403
+    end
     
     private
 
