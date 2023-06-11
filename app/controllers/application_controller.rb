@@ -19,6 +19,10 @@ class ApplicationController < ActionController::API
     rescue_from 'CustomErrors::BadRequestError' do |exception|
         render_error exception, 400
     end
+
+    rescue_from 'CustomErrors::GoneError' do |exception|
+        render_error exception, 410
+    end
     
     private
 
