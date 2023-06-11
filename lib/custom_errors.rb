@@ -12,4 +12,11 @@ module CustomErrors
             @message = message
         end
     end
+
+    class BadRequestError < StandardError
+        def initialize(message = "Bad request")
+            super
+            @message = message
+        end
+    end
 end

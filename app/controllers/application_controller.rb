@@ -15,6 +15,10 @@ class ApplicationController < ActionController::API
     rescue_from 'CustomErrors::ForbiddenError' do |exception|
         render_error exception, 403
     end
+
+    rescue_from 'CustomErrors::BadRequestError' do |exception|
+        render_error exception, 400
+    end
     
     private
 
