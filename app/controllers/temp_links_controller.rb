@@ -1,6 +1,6 @@
 class TempLinksController < ApplicationController
 
-    skip_before_action :authenticate, only: [:create]
+    skip_before_action :authenticate, only: [:create, :show]
 
     def create
         email = create_temp_link_params[:email]
@@ -12,6 +12,19 @@ class TempLinksController < ApplicationController
             render json: {status: "email_sent"}
         else
             raise CustomErrors::BadRequestError.new
+        end
+    end
+
+    def show
+        link = TempLink.find_by!(id: params[:id])
+        if link.clicked_at != nil
+            raise CustomErrors::GoneError.new("Link already clicked")
+        elsif link.created_at < Time.now - 1.hours
+            raise CustomErrors::GoneError.new("Link has expired")
+        else
+            TempLink.update!(link.id, clicked_at: Time.now)
+            update_headers_with_token link.user_id
+            render json: {login: true}
         end
     end
 
