@@ -1,0 +1,2 @@
+class TempLinkMailer < ApplicationMailer
+end
