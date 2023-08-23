@@ -1,0 +1,9 @@
+development:
+  url_base: "http://localhost:3000"
+  email_domain: "development-local.com"
+test:
+  url_base: "http://localhost:3000"
+  email_domain: "test-local.com"
+production:
+  url_base: "http://localhost:3000"
+  email_domain: "production-local.com"
