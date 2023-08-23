@@ -11,6 +11,7 @@
 - log into psql with: psql -d botter_development
 - test back end using Postman to localhost:3000
 - verify expected changes in DB
+- you may need to generate the files "id_rsa" and "id_rsa.pub" in the project root dir using ssh-gen because they are gitignored.
 
 ## Local smtp server for testing
 - https://github.com/rnwood/smtp4dev
