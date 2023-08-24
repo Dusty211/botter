@@ -7,8 +7,10 @@ class TempLinksController < ApplicationController
         if email.class == String && email.length > 0
             user_id = User.find_by!(email: email).id
             link_id = TempLink.create(user_id: user_id).id
-            url = "localhost:3000/temp_links/#{link_id}"
-            # Send email with url to user's email. ActionMailer.
+            TempLinkMailer.with(
+                url: "#{Rails.configuration.env_variables.url_base}/temp_links/#{link_id}", 
+                email: email
+            ).login_email.deliver_later
             render json: {status: "email_sent"}
         else
             raise CustomErrors::BadRequestError.new

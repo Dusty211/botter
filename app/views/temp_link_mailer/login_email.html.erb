@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome back to <%= Rails.configuration.env_variables.url_base %></h1>
+    <p>
+      Here is a link you can use to login:
+    </p>
+    <a href="<%= @url %>">
+        <%= @url %>
+    </a>
+
+  </body>
+</html>
